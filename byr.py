@@ -1,4 +1,5 @@
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python
+# coding=utf-8
 
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
