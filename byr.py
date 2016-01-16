@@ -25,15 +25,15 @@ def find_sec(secid):
     browser.get("http://bbs.byr.cn/#!section/%d "%secid) # Load page
         
     time.sleep(1) # Let the page load
-    result=[]
+    result = []
     try:
         #获得版面名称和在线人数，存入列表中
-        board=browser.find_elements_by_class_name('title_1')
-        ol_num=browser.find_elements_by_class_name('title_4')
+        board = browser.find_elements_by_class_name('title_1')
+        ol_num = browser.find_elements_by_class_name('title_4')
         
-        max_bindex=len(board)
-        max_oindex=len(ol_num)
-        assert max_bindex==max_oindex,'index not equivalent!'
+        max_bindex = len(board)
+        max_oindex = len(ol_num)
+        assert max_bindex == max_oindex,'index not equivalent!'
         
         #版面名称有中英文，用正则过滤只剩英文的，存入列表
         for i in range(1,max_oindex):
@@ -47,9 +47,9 @@ def find_sec(secid):
 
 #写入excel，xlutils可以写入到已存在的excel中,xlwt只能每次都重写
 def write_xls(lis,column,filename):
-    rb=open_workbook(filename)
-    wb=copy(rb)
-    ws=wb.get_sheet(0)
+    rb = open_workbook(filename)
+    wb = copy(rb)
+    ws = wb.get_sheet(0)
     data_time = time.ctime().split(' ')[3]
     ws.write(0,0,'')#第一行第一列显示空
     ws.write(0,column,data_time)#第一行显示时间
