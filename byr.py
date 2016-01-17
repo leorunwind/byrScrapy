@@ -46,6 +46,20 @@ def find_sec(secid):
     except NoSuchElementException:
         assert 0, "can't find element"
 
+#获得失物招领版块的发帖时间和主题，返回列表[[info,date], [info,date], [info,date]...]
+def get_lostandfound(url = 'http://bbs.byr.cn/#!board/lostandfound'):
+    browser = webdriver.Firefox()
+    browser.get(url)
+    info = browser.find_elements_by_class_name('title_9')
+    date = browser.find_elements_by_class_name('title_10')
+    res = []
+
+    for i in xrange(len(info)):
+        res.append([info[i].text, date[i*2].text])
+    
+    browser.close()
+    return res
+    
 #写入excel，xlutils可以写入到已存在的excel中,xlwt只能每次都重写
 def write_xls(lis,column,filename):
     rb = open_workbook(filename)
@@ -77,6 +91,10 @@ def main():
         cnt_times += 1
         #每隔指定时间统计一次(考虑5s的运行时间)
         time.sleep(COUNT_INTERVAL - 5)
+    
+    #失物招领信息放在lost.xls里（最好先手动创建一个空的lost.xls文件，这样是有点蠢= =）
+    res = get_lostandfound(url)
+    write_xls(res,column = 1,filename = 'lost.xls')
         
 if __name__ == '__main__':
     main()
